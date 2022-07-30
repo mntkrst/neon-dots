@@ -130,3 +130,108 @@ body {
 .menu__buy:active>* {
     transform: scale(.8);
 }
+
+.level {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    font-size: 0px;
+    user-select: none;
+}
+
+.level__row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.level__row:not(:first-child) {
+    margin-top: 2px;
+}
+
+.level__tile {
+    flex-grow: 1;
+}
+
+.level__tile:not(:first-child) {
+    margin-left: 2px;
+}
+
+.tile__img {
+    width: 100%;
+}
+
+.tile {
+    position: relative;
+}
+
+.tile__circle {
+    width: 60%;
+    height: 60%;
+    position: absolute;
+    left: 20%;
+    top: 20%;
+    border-radius: 50%;
+    transition: transform 200ms ease;
+}
+
+.tile::before {
+    pointer-events: none;
+}
+
+.tile > * {
+    pointer-events: none;
+}
+
+.tile_link-right:before {
+    content: '';
+    position: absolute;
+    width: 113%;
+    height: 26%;
+    display: block;
+    left: 37%;
+    top: 37%;
+    background: var(--color);
+    z-index: 2;
+}
+
+.tile_link-left:before {
+    content: '';
+    position: absolute;
+    width: 113%;
+    height: 26%;
+    display: block;
+    right: 37%;
+    top: 37%;
+    background: var(--color);
+    z-index: 2;
+}
+
+.tile_link-top:before {
+    content: '';
+    position: absolute;
+    width: 26%;
+    height: 113%;
+    display: block;
+    left: 37%;
+    bottom: 37%;
+    background: var(--color);
+    z-index: 2;
+}
+
+.tile_link-bot:before {
+    content: '';
+    position: absolute;
+    width: 26%;
+    height: 113%;
+    display: block;
+    left: 37%;
+    top: 37%;
+    background: var(--color);
+    z-index: 2;
+}
+
+.tile_active .tile__circle {
+    transform: scale(1.3);
+}

@@ -41,11 +41,15 @@ NodeList.prototype.addClass = function (className) {
 }
 
 NodeList.prototype.removeClass = function (className) {
-  this.forEach(el => el.classList.remove(className));
+    this.forEach(el => el.classList.remove(className));
 }
 
-function q(selector) {
-    return document.querySelectorAll(selector);
+function q(selector, context) {
+    if (!context) {
+        context = document;
+    }
+    
+    return context.querySelectorAll(selector);
 }
 
 function calculateBackgroundScale(imageWidth, imageHeight, blockWidth, blockHeight) {
@@ -66,4 +70,31 @@ function calculateBackgroundScale(imageWidth, imageHeight, blockWidth, blockHeig
         gapY = 0;
         return { width: calculatedWidthFromScalingByHeight, height: blockHeight, gapX, gapY, scaleCoef: scaleByHeight };
     }
+}
+
+
+function createElement(tagName, data) {
+    const el = document.createElement(tagName);
+
+    (data.classNames || []).forEach(className => {
+        el.classList.add(className);
+    });
+
+    Object.entries(data.attrs || {}).forEach((entrie) => {
+        el.setAttribute(entrie[0], entrie[1]);
+    });
+
+    Object.entries(data.listeners || {}).forEach((entrie) => {
+        el.addEventListener(entrie[0], entrie[1]);
+    });
+
+    Object.entries(data.style || {}).forEach((entrie) => {
+        el.style[entrie[0]] = entrie[1];
+    });
+
+    if (data.innerHTML) {
+        el.innerHTML = data.innerHTML;
+    }
+
+    return el;
 }
