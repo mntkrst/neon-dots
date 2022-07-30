@@ -24,6 +24,16 @@ q('.buy-lamp').on('click', () => {
 });
 
 const LEVEL_1 = [
+    ['B', 0, 'V', 'B', 0],
+    [0, 'Y', 0, 'Y', 0],
+    [0, 0, 0, 0, 0],
+    ['V', 0, 'O', 0, 0],
+    ['G', 0, 'B', 'G', 0],
+    [0, 0, 0, 0, 0],
+    ['O', 0, 0, 0, 0]
+];
+
+const LEVEL_2s = [
     [0, 0, 'V', 'B', 0],
     [0, 'Y', 0, 'Y', 0],
     [0, 0, 0, 0, 0],
@@ -49,7 +59,7 @@ class Path {
         const el = q(`[data-x="${x}"][data-y="${y}"]`)[0];
         this.dataDot = el.getAttribute('data-dot');
 
-        if (!this.dataDot || el.getAttribute('data-filled') === '2') {
+        if (!this.dataDot || +el.getAttribute('data-filled') === 2) {
             this.active = false;
             return;
         }
@@ -77,6 +87,11 @@ class Path {
         const el = q(`[data-x="${x}"][data-y="${y}"]`)[0];
         const isElFilled = +el.getAttribute('data-filled');
         const dataDot = el.getAttribute('data-dot');
+
+        if (isElFilled === 2) {
+            this.revert();
+            return;
+        }
 
         if (isElFilled && dataDot !== this.dataDot) {
             this.revert();
@@ -168,10 +183,11 @@ class Game {
     }
 
     addEvents(levelEl) {
-        document.addEventListener('touchstart', (e) => {
-            e.stopPropagation();
-            e.preventDefault();
-        });
+        // document.addEventListener('touchstart', (e) => {
+        //     e.stopPropagation();
+        //     e.preventDefault();
+        // });
+         
         levelEl.addEventListener('touchmove', (e) => {
             e.stopPropagation();
             e.preventDefault();
@@ -220,7 +236,6 @@ class Game {
             if (tile !== this.lastTile) {
                 const x = +tile.getAttribute('data-x');
                 const y = +tile.getAttribute('data-y');
-                console.log('to', x, y);
                 if (this.path && this.path.active) {
                     this.path.next(x, y)
                 } else {
