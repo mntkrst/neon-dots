@@ -168,6 +168,10 @@ class Game {
     }
 
     addEvents(levelEl) {
+        document.addEventListener('touchstart', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+        });
         levelEl.addEventListener('touchmove', (e) => {
             e.stopPropagation();
             e.preventDefault();
