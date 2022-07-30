@@ -136,6 +136,7 @@ body {
     max-width: 400px;
     position: relative;
     font-size: 0px;
+    margin: 0 auto;
     user-select: none;
 }
 

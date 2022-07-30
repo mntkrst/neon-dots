@@ -169,6 +169,8 @@ class Game {
 
     addEvents(levelEl) {
         levelEl.addEventListener('touchmove', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
             const pageX = e.touches[0].pageX;
             const pageY = e.touches[0].pageY;
             this.processPosition(pageX, pageY);
@@ -181,6 +183,8 @@ class Game {
 
         levelEl.addEventListener('mousemove', e => {
             if (!drag) { return; }
+            e.stopPropagation();
+            e.preventDefault();
             const pageX = e.pageX;
             const pageY = e.pageY;
             this.processPosition(pageX, pageY);
