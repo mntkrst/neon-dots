@@ -7,10 +7,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#323232">
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="icon" href="./icons/ic.png">
-    <!-- <link rel="manifest" href="./manifest.webmanifest"> -->
+    <link rel="stylesheet" href="./css/view.css">
+    <link rel="icon" href="./icons/ic48.png">
+    <link rel="manifest" href="./manifest.webmanifest">
     <title>Neon Dots</title>
 </head>
-<body>
 
+<body>
+    <div class="wrapper">
+        <div class="views">
+            <div class="view view_main">
+                <div class="view_header">
+                    <div class="level-header">
+                        <span>Level <span data-storage="level"></span></span>
+                    </div>
+                </div>
+                <div class="menu">
+                    <img class="menu__play" src="./img/play.svg" role="button" alt="Play">
+                    <div class="menu__balance">
+                        <img src="./img/coin.png" alt="Coin">
+                        <span data-storage="balance"></span>
+                    </div>
+                    <div class="menu__buy">
+                        <div class="menu__lamp lamp">
+                            <img src="./img/lamp.png" alt="Lamp">
+                            <div class="count-indicator" data-storage="help"></div>
+                        </div>
+                        <div class="price buy-lamp">
+                            400
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/dom.js"></script>
+    <script src="./js/storage.js"></script>
+    <script src="./js/view.js"></script>
+    <script src="./js/index.js"></script>
 </body>

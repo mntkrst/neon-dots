@@ -1,0 +1,56 @@
+
+.view {
+    overflow: auto;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+@keyframes showViewNext {
+    0% {
+        left: 100%;
+    }
+
+    100% {
+        left: 0%;
+    }
+}
+
+@keyframes showViewPrev {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 0%;
+    }
+}
+
+@keyframes hideViewNext {
+    0% {
+        left: 0%;
+        display: block;
+    }
+
+    100% {
+        left: -100%;
+        display: block;
+    }
+}
+
+.view_active {
+    display: block;
+}
+
+.view_active-prev {
+    animation: 300ms showViewPrev;
+}
+
+.view_active-next {
+    animation: 300ms showViewNext;
+}
+
+.view_inactive-next {
+    animation: 300ms hideViewNext;
+}

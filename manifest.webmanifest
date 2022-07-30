@@ -1,0 +1,25 @@
+{
+    "name": "Neon Dots",
+    "short_name": "Neon Dots",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#323232",
+    "description": "A neon dots game",
+    "icons": [
+        {
+            "src": "./icons/ic48.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/ic96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/ic168.png",
+            "sizes": "168x168",
+            "type": "image/png"
+        }
+    ]
+}
