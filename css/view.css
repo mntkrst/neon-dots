@@ -5,6 +5,7 @@
     width: 100%;
     height: 100%;
     display: none;
+    left: 100%;
 }
 
 @keyframes showViewNext {
@@ -40,6 +41,7 @@
 }
 
 .view_active {
+    left: 0px;
     display: block;
 }
 

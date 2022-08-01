@@ -133,11 +133,11 @@ body {
 
 .level {
     width: 100%;
-    max-width: 400px;
     position: relative;
     font-size: 0px;
     margin: 0 auto;
     user-select: none;
+    max-width: 400px;
 }
 
 .level__row {
@@ -181,7 +181,7 @@ body {
     pointer-events: none;
 }
 
-.tile > * {
+.tile>* {
     pointer-events: none;
 }
 
@@ -206,6 +206,18 @@ body {
     }
 }
 
+.tile.highlight:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color);
+    opacity: .2;
+    border-radius: 30%;
+}
+
 .tile_link-right:before {
     content: '';
     position: absolute;
@@ -216,7 +228,7 @@ body {
     top: 37%;
     background: var(--color);
     z-index: 2;
-    animation: horizontalLinkAnim 200ms linear ;
+    animation: horizontalLinkAnim 200ms linear;
 }
 
 .tile_link-left:before {
@@ -229,7 +241,7 @@ body {
     top: 37%;
     background: var(--color);
     z-index: 2;
-    animation: horizontalLinkAnim 200ms linear ;
+    animation: horizontalLinkAnim 200ms linear;
 }
 
 .tile_link-top:before {
@@ -242,7 +254,7 @@ body {
     bottom: 37%;
     background: var(--color);
     z-index: 2;
-    animation: verticalLinkAnim 200ms linear ;
+    animation: verticalLinkAnim 200ms linear;
 }
 
 .tile_link-bot:before {
@@ -255,9 +267,125 @@ body {
     top: 37%;
     background: var(--color);
     z-index: 2;
-    animation: verticalLinkAnim 200ms linear ;
+    animation: verticalLinkAnim 200ms linear;
 }
 
 .tile_active .tile__circle {
     transform: scale(1.3);
+}
+
+.view_header_game {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.header__left,
+.hedaer__right,
+.hedaer__balance {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.hedaer__balance img {
+    height: 32px;
+}
+
+.lamp_small img {
+    height: 32px;
+}
+
+
+.to-menu {
+    height: 24px;
+}
+
+.view_header_game {
+    padding: 0 12px;
+}
+
+.to-menu {
+    margin-right: 8px;
+}
+
+.timer {
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+}
+
+.hedaer__balance {
+    margin-right: 8px;
+    color: #fff;
+}
+
+.hedaer__balance img {
+    margin-right: 4px;
+}
+
+.level-cotent {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.game-footer {
+    position: absolute;
+    bottom: 16px;
+    left: 0px;
+    width: 100%;
+}
+
+.refresh {
+    position: absolute;
+    right: 8px;
+    bottom: 12px;
+    height: 32px;
+    transition: all 200ms ease;
+}
+
+.refresh:active {
+    transform: scale(.8);
+}
+
+.level-complete-overlay {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.level-complete {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    padding: 12px 32px;
+    border-radius: 28px;
+    border: 2px solid #fff;
+    background: linear-gradient(180deg, #000000 0%, #333333 100%);
+
+}
+
+.next-level {
+    height: 64px;
+    margin-top: 24px;
+}
+
+.level-complete__header {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 24px;
 }

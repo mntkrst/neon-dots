@@ -24,16 +24,6 @@ q('.buy-lamp').on('click', () => {
 });
 
 const LEVEL_1 = [
-    ['B', 0, 'V', 'B', 0],
-    [0, 'Y', 0, 'Y', 0],
-    [0, 0, 0, 0, 0],
-    ['V', 0, 'O', 0, 0],
-    ['G', 0, 'B', 'G', 0],
-    [0, 0, 0, 0, 0],
-    ['O', 0, 0, 0, 0]
-];
-
-const LEVEL_2s = [
     [0, 0, 'V', 'B', 0],
     [0, 'Y', 0, 'Y', 0],
     [0, 0, 0, 0, 0],
@@ -42,6 +32,37 @@ const LEVEL_2s = [
     [0, 0, 0, 0, 0],
     ['O', 0, 0, 0, 0]
 ];
+
+const LEVEL_2 = [
+    ['Y', 0, 'V', 'B', 'B'],
+    [0, 0, 0, 0, 0],
+    ['Y', 0, 0, 0, 0],
+    ['V', 0, 'O', 0, 'G'],
+    ['O', 0, 0, 0, 0],
+    [0, 0, 0, 0, 'G']
+];
+
+const LEVEL_4 = [
+    ['-', 'B', 'V', 0, '-'],
+    [0, 0, 'V', 0, 'Y'],
+    [0, '-', 'O', 0, 0],
+    [0, 0, 'G', 0, 0],
+    [0, 0, '-', 0, 0],
+    [0, 0, '-', 0, 0],
+    ['B', 'G', '-', 'O', 'Y'],
+];
+
+const LEVEL_3 = [
+    ['G', 'G', 'V', 'O', 'O'],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    ['B', 'B', 'V', 'Y', 'Y']
+];
+
+const levels = [LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4];
 
 
 const colors = {
@@ -79,7 +100,7 @@ class Path {
         this.path = [this.startEl];
     }
 
-    next(x, y) {
+    next(x, y, finishClbc) {
         if ((Math.abs(this.currentX - x) + Math.abs(this.currentY - y)) !== 1) {
             return;
         }
@@ -120,6 +141,9 @@ class Path {
         if (dataDot === this.dataDot) {
             this.active = false;
             this.path[0].classList.remove('tile_active');
+
+            this.path.forEach(e => e.classList.add('highlight'));
+            finishClbc();
         }
     }
 
@@ -150,14 +174,30 @@ class Game {
     constructor() {
         this.reservedMarks = [0, '-'];
         this.path = null;
+
+        this.timeS = 0;
+        this.timeM = 0;
+
+        setInterval(() => {
+            this.timeS++;
+            if (this.timeS > 60) {
+                this.timeS = 0;
+                this.timeM++;
+            };
+            q('.timer__value').setHTML(`${this.timeM}:${`${this.timeS}`.padStart(2, '0')}`);
+        }, 1000);
     }
 
     generateLevel(level) {
+        this.timeS = 0;
+        this.timeM = 0;
+        this.dotsCounter = 0;
         const levelEl = createElement('div', { classNames: ['level'] });
 
         level.forEach((row, y) => {
             const rowEl = createElement('div', { classNames: ['level__row'] });
             levelEl.appendChild(rowEl);
+
             row.forEach((tile, x) => {
                 const tileEl = createElement('div', {
                     classNames: ['level__tile', 'tile'],
@@ -167,7 +207,13 @@ class Game {
                 const tileImgEl = createElement('img', { classNames: ['tile__img'], attrs: { src: './img/tile.svg' } });
                 tileEl.appendChild(tileImgEl);
 
+                if (tile === '-') {
+                    tileEl.setAttribute('data-filled', '2');
+                    tileEl.style.opacity = '0';
+                }
+
                 if (!this.reservedMarks.includes(tile)) {
+                    this.dotsCounter++;
                     const circleEl = createElement('div', { classNames: ['tile__circle'], style: { background: colors[tile] } });
                     tileEl.setAttribute('data-filled', '1');
                     tileEl.setAttribute('data-color', colors[tile]);
@@ -183,11 +229,7 @@ class Game {
     }
 
     addEvents(levelEl) {
-        // document.addEventListener('touchstart', (e) => {
-        //     e.stopPropagation();
-        //     e.preventDefault();
-        // });
-         
+
         levelEl.addEventListener('touchmove', (e) => {
             e.stopPropagation();
             e.preventDefault();
@@ -237,7 +279,14 @@ class Game {
                 const x = +tile.getAttribute('data-x');
                 const y = +tile.getAttribute('data-y');
                 if (this.path && this.path.active) {
-                    this.path.next(x, y)
+                    this.path.next(x, y, () => {
+                        this.dotsCounter -= 2;
+                        console.log(this.dotsCounter);
+                        if (this.dotsCounter === 0) {
+                            q('.level-complete-overlay')[0].style.display = 'block';
+                            S.balance += 360;
+                        }
+                    })
                 } else {
                     this.path = new Path(x, y);
                 }
@@ -249,8 +298,44 @@ class Game {
 
 const G = new Game();
 
+function genLevel() {
+    q('.level-cotent')[0].innerHTML = '';
+    let level = levels[S.level - 1];
+    if (!level) {
+        level = levels[levels.length - 1];
+    }
+    q('.level-cotent')[0].appendChild(G.generateLevel(level));
+}
+
 q('.menu__play').on('click', () => {
     window.viewController.next('level');
-    q('.view_level').innerHTML = '';
-    q('.view_level')[0].appendChild(G.generateLevel(LEVEL_1));
+    genLevel();
+});
+
+q('.to-menu').on('click', () => {
+    window.viewController.next('main');
+});
+
+(() => {
+    let prevGameFieldSize = 0;
+    const setLevelWidth = () => {
+        requestAnimationFrame(setLevelWidth)
+
+        const height = q('.view_level')[0].clientHeight;
+        const gameFieldSize = height - 84 - 64;
+
+        if (prevGameFieldSize !== gameFieldSize) {
+            prevGameFieldSize = gameFieldSize;
+            q('.level-cotent')[0].style.width = `${gameFieldSize / 7 * 5}px`;
+        }
+    }
+    setLevelWidth();
+})();
+
+q('.refresh').on('click', () => genLevel())
+
+q('.level-complete-overlay').on('click', () => {
+    q('.level-complete-overlay')[0].style.display = 'none';
+    S.level++;
+    genLevel();
 })

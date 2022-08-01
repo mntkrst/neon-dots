@@ -40,10 +40,47 @@
                 </div>
             </div>
 
-            <div class="viwe view_level">
-
+            <div class="view view_level">
+                <div class="view_header view_header_game">
+                    <div class="header__left">
+                        <img src="./img/arr_l.svg" class="to-menu" alt="Back">
+                        <div class="timer">
+                            <div class="timer__header">TIME</div>
+                            <div class="timer__value">00:00</div>
+                        </div>
+                    </div>
+                    <div class="hedaer__right">
+                        <div class="hedaer__balance">
+                            <img src="./img/coin.png" alt="Coin">
+                            <span data-storage="balance"></span>
+                        </div>
+                        <div class="header__help">
+                            <div class="lamp lamp_small use-help">
+                                <img src="./img/lamp.png" alt="Lamp">
+                                <div class="count-indicator" data-storage="help"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="level-cotent"></div>
+                <div class="game-footer">
+                    <div class="level-header">
+                        <span>Level <span data-storage="level"></span></span>
+                    </div>
+                </div>
+                <img src="./img/refresh.svg" class="refresh" alt="">
             </div>
+        </div>
+    </div>
 
+    <div class="level-complete-overlay">
+        <div class="level-complete">
+            <div class="level-complete__header">Level complete</div>
+            <div class="hedaer__balance">
+                <img src="./img/coin.png" alt="Coin">
+                <span class="win-sum">+360</span>
+            </div>
+            <img src="./img/play.svg" class="next-level" alt="">
         </div>
     </div>
 
